@@ -1,5 +1,6 @@
 import readchar
 import random
+from colors import styled_print, reset_colors, colors, styles
 
 POS_X = 0
 POS_Y = 1
@@ -31,6 +32,7 @@ def draw_map(width: int, heigth: int, player_pos: list, map_objects: list, tail_
                 if coordinate_x == map_object[POS_X] and coordinate_y == map_object[POS_Y]: #Draw object position with *
 
                     char_to_draw = "*"
+                    styled_print(styles["bold"], colors["red"])
                     object_in_cell = map_object # If we happen to stumble upon an object, we store it in the object_in_cell variable
 
             # Tail management       
@@ -39,10 +41,14 @@ def draw_map(width: int, heigth: int, player_pos: list, map_objects: list, tail_
                 if coordinate_x == tails[POS_X] and coordinate_y == tails[POS_Y]:
 
                     char_to_draw = "@"
+
+                    styled_print(styles["bold"], colors["green"])
             
             if coordinate_x == player_pos[POS_X] and coordinate_y == player_pos[POS_Y]: #Draw player position with @
 
                 char_to_draw = "@"
+
+                styled_print(styles["bold"], colors["green"])
 
                 for tails in tail: # Let's check if the player position is the same as one of the tails
                     if coordinate_x == tails[POS_X] and coordinate_y == tails[POS_Y]:
@@ -58,6 +64,7 @@ def draw_map(width: int, heigth: int, player_pos: list, map_objects: list, tail_
                         map_objects.append(new_object_position)
             
             print(" {} ".format(char_to_draw), end="")
+            reset_colors()
         print("|")
 
     print("+" + "-" * (width * 3) + "+")
@@ -91,7 +98,9 @@ def ask_direction(player_pos: list, tail_length: list, tail: list):
         player_pos[POS_X] = (player_pos[POS_X] + 1) % MAP_WIDTH
 
     else:
+        styled_print(styles["bold"], colors["green"])
         print("Thanks for playing!")
+        reset_colors()
     
     return direction
 
